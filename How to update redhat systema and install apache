@@ -3,3 +3,5 @@
     3  systemctl start httpd
     4  systemctl enable httpd
     5  systemctl status httpd
+    ########to verify the apache server running using command line#
+    curl localhost
