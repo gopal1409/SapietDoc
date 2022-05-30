@@ -1,0 +1,1 @@
+New-NetFirewallRule -DiplayName "Allow" -Protocol ICMPv4
