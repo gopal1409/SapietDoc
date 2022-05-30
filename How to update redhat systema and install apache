@@ -8,3 +8,6 @@
 ###how to disable linux firewall
  9  systemctl stop firewalld
    10  systemctl disable firewalld
+   ########change the indexc.html file####
+   12  echo "hello from gopal" > /var/www/html/index.html
+
