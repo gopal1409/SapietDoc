@@ -5,3 +5,6 @@
     5  systemctl status httpd
     ########to verify the apache server running using command line#
     curl localhost
+###how to disable linux firewall
+ 9  systemctl stop firewalld
+   10  systemctl disable firewalld
