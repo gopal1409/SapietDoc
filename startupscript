@@ -1,0 +1,8 @@
+#! /bin/bash  
+sudo su
+apt update
+apt -y install apache2
+sudo service apache2 start
+sudo update-rc.d apache2 enable
+"Hello from gcp World" > /var/www/html/index.html
+"Hello gcp world from $(hostname) $(hostname -I)" > /var/www/html/index.html
