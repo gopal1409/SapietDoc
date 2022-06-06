@@ -1,0 +1,10 @@
+ 253  cd /root
+ 255  wget https://repo.mysql.com/mysql80-community-release-el8-4.noarch.rpm
+  256   yum localinstall mysql80-community-release-el8-1.noarch.rpm
+  257  yum repolist enabled | grep "mysql.*-community.*"
+264  yum install mysql
+  265  systemctl enable mysqld.service
+  268  systemctl status mysqld
+  269  systemctl start mysqld
+  270  systemctl status mysqld
+  271  mysql_secure_installation
