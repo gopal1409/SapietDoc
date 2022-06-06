@@ -1,0 +1,117 @@
+Writing and reading MySQL database from Linux Bash
+MySQL is a very popular database management system used to manage databases for the storage systems for applications that are written in languages, such as PHP, Python, C++, and so on. Databases play important role in many business operations. Also, there are many tricks for using MySQL. Accessing and manipulating MySQL databases from shell scripts is also fascinating, as we can write scripts to store contents from a text file or Comma Separated Values (CSV) into tables and interact with the MySQL database to read and manipulate data. For example, we can read all the customer names stored in a company database by running a query from the shell script. In this tutorial, we will see how to read and write to the MySQL database from Bash. In doing so, we consider the following problem: I have a CSV file containing details of students. I need to insert the contents of the file to a database table. From this data, I need to generate a separate rank list for each department.
+
+Getting ready
+In order to handle MySQL databases, you should have mysql-server and mysql-client packages installed on your system. These tools do not come with a Linux distribution by default. As MySQL comes with a username and password for authentication, you should also set a username and password while installing the MySQL server.
+
+How to do it…
+The preceding problem can be solved using Bash utilities sort, awk, and so on. Alternately, we can also solve it by using an SQL database table. We will write three scripts for the purpose of creating a database and table, inserting student data into the table, and reading and displaying processed data from the table. Create the database and table script as follows:
+#!/bin/bash
+#Filename: create_db.sh
+#Description: Create MySQL database and table
+
+USER="user" PASS="user"
+
+mysql -u $USER -p$PASS <<EOF 2> /dev/null CREATE DATABASE students;
+EOF
+
+[ $? -eq 0 ] && echo Created DB || echo DB already exist
+
+mysql -u $USER –p $PASS students <<EOF 2> /dev/null CREATE TABLE students(
+id int,
+name varchar(100), mark int,
+dept varchar(4)
+); EOF
+
+[ $? -eq 0 ] && echo Created table students || echo Table students already exist
+
+mysql -u $USER -p$PASS students <<EOF DELETE FROM students;
+EOF
+
+The script for inserting data into the table is as follows:
+
+#!/bin/bash
+#Filename: write_to_db.sh
+#Description: Read from CSV and write to MySQLdb
+
+USER="user" PASS="user"
+
+if [ $# -ne 1 ]; then
+echo $0 DATAFILE echo
+exit 2
+fi data=$1
+while read line; do
+
+oldIFS=$IFS IFS=,
+values=($line)
+values[1]="\"`echo ${values[1]} | tr ' ' '#' `\"" values[3]="\"`echo ${values[3]}`\""
+
+query=`echo ${values[@]} | tr ' #' ', ' `
+IFS=$oldIFS
+
+mysql -u $USER -p$PASS students <<EOF INSERT INTO students VALUES($query); EOF
+
+done< $data
+echo Wrote data into DB
+The script for the query from the database is as follows:
+#!/bin/bash #Filename: read_db.sh
+#Description: Read from the database
+
+USER="user" PASS="user"
+
+depts=`mysql -u $USER -p$PASS students <<EOF | tail -n +2 SELECT DISTINCT dept FROM students;
+EOF`
+
+for d in $depts; do
+
+echo Department : $d
+
+result="`mysql -u $USER -p$PASS students <<EOF SET @i:=0;
+SELECT @i:=@i+1 as rank,name,mark FROM students WHERE dept="$d" ORDER BY mark DESC;
+EOF`"
+
+echo "$result" echo
+done
+
+The data for the input CSV file (studentdata.csv) is as follows:
+1,Navin M,98,CS
+2,Kavya N,70,CS
+3,Nawaz O,80,CS
+4,Hari S,80,EC
+5,Alex M,50,EC
+
+6,Neenu J,70,EC
+7,Bob A,30,EC
+8,Anu M,90,AE
+9,Sruthi,89,AE 10,Andrew,89,AE
+
+Execute the scripts in the following sequence:
+$ ./create_db.sh Created DB
+
+Created table students
+$ ./write_to_db.sh studentdat.csv Wrote data into DB
+
+$ ./read_db.sh Department : CS rank      name    mark
+1              Navin M               98
+2              Nawaz O              80
+3              Kavya N                70
+
+Department : EC rank     name    mark
+1              Hari S     80
+2              Neenu J               70
+3              Alex M  50
+4              Bob A    30
+
+Department : AE rank    name    mark
+1              Anu M  90
+2              Sruthi    89
+3              Andrew                89
+
+ 
+
+How it works…
+We will now see the explanation of the preceding scripts one by one. The first script create_ db.sh is used to create a database called students and a table named students inside it. We need the MySQL username and password to access or modify data in the DBMS. The variables USER and PASS are used to store the username and password. The mysql command is used for MySQL manipulations. The mysql command can specify the username by using -u and the password by using –p PASSWORD. The other command argument for the mysql command is the database name. If a database name is specified as an argument to the mysql command, it will use that for database operations, else we have to explicitly specify in the SQL query about which database is to be used with the use database_name query. The mysql command accepts the queries to be executed through standard input (stdin). The convenient way of supplying multiple lines through stdin is by using the <<EOF method. The text that appears in between <<EOF and EOF is passed to mysql as standard input. In the CREATE DATABASE query, we have redirected stderr to /dev/null in order to prevent displaying an error message. Also, in the table creation query, we have redirected stderr to /dev/null to ignore any errors that occur. Then, we check the exit status for the mysql command by using the exit status variable $? to know if a table or database already exists.  If the database or table already exists, a message is displayed to notify that, else we will create them.
+
+The next script write_to_db.sh accepts a filename of the student data CSV file. We read each line of the CSV file by using the while loop. So in each iteration, a line with comma separated values will be received. We then need to formulate the values in the line to an SQL query. For that, the easiest way to store data items in the comma-separated line is by using an array. We know that an array assignment is in the form array=(val1 val2 val3). Here, the space character is the Internal Field Separator (IFS). We have a line with comma separated values, hence by changing the IFS to a comma, we can easily assign values to the array (IFS=,). The data items in the comma separated line are id, name, mark, and department. id and mark are integer values, whereas name and dept are strings (strings must be quoted). Also, the name can contain space characters. Space can conflict with the Internal Field Separator. Hence, we should replace the space in the name with a character (#) and replace it later after formulating the query. In order to quote the strings, the values in the array are reassigned prefix and suffix with \". The tr is used to substitute space in the name to #. Finally, the query is formed by replacing the space character with a comma and replacing # with a space, and this query is executed.
+
+The third script read_db.sh is used to find out the department and print the rank list of students for each department. The first query is used to find distinct names of departments. We use a while loop to iterate through each department and run the query to display student details in the order of highest marks. SET @i=0 is an SQL construct used to set the variable i=0. On each row it is incremented and is displayed as the rank of the student.
