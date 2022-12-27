@@ -1,3 +1,4 @@
+sudo -
 175  git clone https://github.com/gopal1409/springchat.git
   176  cd springchat/
   177  rm -rf .git
@@ -7,7 +8,9 @@
   181  git add .
   182  git commit -m "intial repo"
   183  git log
+  ###now create a repo in github the repo should be pvt then add your refrence
   184  git remote add origin git@github.com:gopal1409/sapient-chatapp.git
-  185  ssh-keygen -t rsa
+ 
   186  cat /root/.ssh/id_rsa.pub
+  ##the above mentioned key need to be upload in github
   187  git push origin master
