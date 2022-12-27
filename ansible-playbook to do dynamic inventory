@@ -19,3 +19,6 @@ include_vm_resource_groups:
 100  apt install python3-pip
   101  pip3 install azure-cli
   102  ansible all -m ping -i myazure_rm.yml
+###use the ansible inventory command to verify graph and list
+ 104  ansible-inventory -i myazure_rm.yml --list
+  105  ansible-inventory -i myazure_rm.yml --graph
