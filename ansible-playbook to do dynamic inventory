@@ -1,0 +1,21 @@
+mkdir dynamic
+cd dynamic
+vi dynamic.yml
+###put the content inside it
+plugin: aure.azcollection.azure_rm
+auth_source: cli
+include_vm_resource_groups:
+  - k8s 
+  ##3update the vm with tags
+  68  az vm update --resource-group k8s --name k8smaster --set tags.applicationRole='k8smaster'
+   69  az vm update --resource-group k8s --name k8snode --set tags.applicationRole='k8snode'
+
+####install the azure cli
+  60  curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+  ##3do az login
+  ##install azure ansible collection module
+   89  ansible-galaxy collection install azure.azcollection
+####then install pip utility ande az utility
+100  apt install python3-pip
+  101  pip3 install azure-cli
+  102  ansible all -m ping -i myazure_rm.yml
