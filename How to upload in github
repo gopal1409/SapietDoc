@@ -1,0 +1,13 @@
+175  git clone https://github.com/gopal1409/springchat.git
+  176  cd springchat/
+  177  rm -rf .git
+  178  git config --global user.name "gopal"
+  179  git config --global user.email "gopal1409@gmail.com"
+  180  git init
+  181  git add .
+  182  git commit -m "intial repo"
+  183  git log
+  184  git remote add origin git@github.com:gopal1409/sapient-chatapp.git
+  185  ssh-keygen -t rsa
+  186  cat /root/.ssh/id_rsa.pub
+  187  git push origin master
