@@ -1,0 +1,28 @@
+ssh root@redhat
+
+45  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+   46  chmod +x ./kind
+   47  sudo mv ./kind /usr/local/bin/kind
+   48  kind create cluster
+   49  kubectl get nodes
+   50  cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+   [kubernetes]
+   name=Kubernetes
+   baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+   enabled=1
+   gpgcheck=1
+   gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+   EOF
+   58  sudo yum install -y kubectl
+   59  kubectl get nodes
+   
+   63  pip3 install ansible kubernetes
+   66  kubectl get pod
+   67  kubectl get ns
+   
+   ###exit
+   ##3inside ansible master node
+   45  ansible-galaxy collection install kubernetes.core
+50  ansible-galaxy collection install cloud.common
+ 54  apt install python3-pip
+   55  pip3 install anisble kubernetes
