@@ -1,0 +1,23 @@
+mkdir nexus
+cd nexus
+23  docker pull sonatype/nexus
+25  nano docker-compose.yml
+
+version: "3"
+services:
+  nexus:
+    image: sonatype/nexus3
+    restart: always
+    volumes:
+      - "nexus-data:/sonatype-work"
+    ports:
+      - "8081:8081"
+      - "8085:8085"
+
+volumes:
+  nexus-data: {}
+  
+  26  docker compose up -d
+   27  docker compose logs --follow
+   28  docker ps
+   29  sudo docker exec -it nexus-nexus-1 cat /nexus-data/admin.password
