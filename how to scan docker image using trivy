@@ -1,0 +1,7 @@
+ 1295  sudo apt-get install wget apt-transport-https gnupg lsb-release
+ 1296  wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+ 1297  echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/trivy.list
+ 1298  apt-get update
+ 1299  apt install trivy
+ 1300  docker images
+ 1301  trivy image springmultibuild
