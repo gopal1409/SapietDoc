@@ -1,0 +1,18 @@
+
+##nano docker.laye
+FROM adoptopenjdk:latest as builder
+WORKDIR application
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+FROM  adoptopenjdk:latest
+WORKDIR application
+COPY --from=builder application/dependencies/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
+COPY --from=builder application/application/ ./
+ENTRYPOINT ["java","org.springframework.boot.loader.JarLuncher]
+######save the file and check the image
+ 1253  docker build -t springmultibuild -f dockerfile.layer .
+ 1254  docker images
+
