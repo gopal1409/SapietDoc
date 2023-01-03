@@ -5,7 +5,7 @@
                                 <artifactId>spring-boot-maven-plugin</artifactId>
                                 <configuration>
                                  <image>
-            <name>docker.io/gopal1409/${project.artifactID}:latest</name>
+            <name>docker.io/gopal1409/${project.artifactId}:latest</name>
                         </image>
                         </configuration>
                         </plugin>
