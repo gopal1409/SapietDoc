@@ -1,0 +1,10 @@
+sudo -i
+ vi /etc/docker/daemon.json
+ ###inside the above mentioned file add this line change the public ip with your own nexus public ip port will be 8085 only no http 
+{
+  "insecure-registries" : ["20.127.172.55:8085"]
+}
+
+###then restart the docker daemon
+systemctl restart docker
+###do this activity in both the machine
