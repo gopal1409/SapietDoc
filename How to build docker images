@@ -1,0 +1,18 @@
+#create a docker file
+ 1159  vi dockerfile
+##content of the dockerfile
+FROM openjdk:19-jdk-alpine3.16
+ARG JAR_FILE=target/sapient-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} app.jar
+EXPOSE 8081
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+###then run the docker build command to build your image
+1162  docker run -d -p 8080:8081 helloimage
+#####to verify the image is created or not
+ 1163  docker images
+
+###run a containers using the image
+docker ps
+curl localhost:8080
+curl localhost:8080/hellow
