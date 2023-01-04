@@ -41,5 +41,18 @@ description: this is my first helm chart
     74  helm rollback my-nginx 1
    75  helm rollback my-nginx 2
 
+###values.yml
+vi values.yml
+####inside the above mentioned file 
+replicaCount: 1
+###how to refer the values.yml in my template folder inside deplyoment.yml
+vi ./templates/deployment.yml
+###modify the replicacount 
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: my-nginx
+
 
 
