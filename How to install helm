@@ -1,0 +1,10 @@
+17  wget https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz
+   18  ls
+   19  tar zxvf helm-v3.10.3-linux-amd64.tar.gz
+   20  cd linux-amd64/
+   21  ls
+   22  cp helm /usr/bin
+   23  cd /root
+   24  helm
+   25  history
+   26  helm list
