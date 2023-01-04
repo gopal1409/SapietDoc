@@ -28,5 +28,8 @@ description: this is my first helm chart
  42  mkdir templates
    43  tree
   45  kubectl create deploy my-nginx --image=nginx -oyaml --dry-run=client
+  #dry run and store the result in template directory
+   50  kubectl create deploy my-nginx --image=nginx -oyaml --dry-run=client > ./templates/deployment.yml
+   51  tree
 
 
