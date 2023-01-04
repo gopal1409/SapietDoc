@@ -37,5 +37,9 @@ description: this is my first helm chart
    69  helm list
    ##3now we need to upgrade the chart
    71  helm upgrade my-nginx .
+   ###rollback feature in helm chart
+    74  helm rollback my-nginx 1
+   75  helm rollback my-nginx 2
+
 
 
