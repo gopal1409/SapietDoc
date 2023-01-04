@@ -31,5 +31,11 @@ description: this is my first helm chart
   #dry run and store the result in template directory
    50  kubectl create deploy my-nginx --image=nginx -oyaml --dry-run=client > ./templates/deployment.yml
    51  tree
+###how to upgrade the chart
+ 67  kubectl expose deploy my-nginx --port 80 -oyaml --dry-run=client > ./templates/service.yml
+   68  tree
+   69  helm list
+   ##3now we need to upgrade the chart
+   71  helm upgrade my-nginx .
 
 
