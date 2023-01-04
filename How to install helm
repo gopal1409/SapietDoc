@@ -24,4 +24,9 @@ name: my-nginx
 version: 0.1.0
 appVersion: 1.0
 description: this is my first helm chart
+###lets create the template file and do a dry run 
+ 42  mkdir templates
+   43  tree
+  45  kubectl create deploy my-nginx --image=nginx -oyaml --dry-run=client
+
 
