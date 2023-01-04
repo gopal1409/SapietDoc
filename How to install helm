@@ -16,4 +16,12 @@
    33  cd my-nginx/
    35  apt install tree
    36  tree
+###lets create chart.yaml file and provide information about the chart
+nano Chart.yml
+###inside chart.yml all the following information
+apiVersion: v1
+name: my-nginx
+version: 0.1.0
+appVersion: 1.0
+description: this is my first helm chart
 
