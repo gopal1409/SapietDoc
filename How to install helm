@@ -8,3 +8,12 @@
    24  helm
    25  history
    26  helm list
+   
+   ###we will create a directory structure for your helm chart
+    30  mkdir charts
+   31  cd charts/
+   32  mkdir my-nginx
+   33  cd my-nginx/
+   35  apt install tree
+   36  tree
+
