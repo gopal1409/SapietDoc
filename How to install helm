@@ -53,6 +53,16 @@ spec:
   selector:
     matchLabels:
       app: my-nginx
+####modify the values.yml
+vi values.yml
+replicaCount: 1
+service:
+        type: NodePort
 
-
-
+###inside service.yml
+vi ./templates/service.yml
+###below spec add this
+spec:
+  type: {{.Values.service.type}}
+  ports:
+  - port: 80
