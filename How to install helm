@@ -66,3 +66,8 @@ spec:
   type: {{.Values.service.type}}
   ports:
   - port: 80
+###how to change the service type
+ 90  helm upgrade my-nginx . --set service.type=NodePort
+   91  helm upgrade my-nginx . --set service.type=ClusterIP
+   92  helm upgrade my-nginx . --set service.type=LoadBalancer
+   93  helm upgrade my-nginx . --set service.type=ClusterIP
