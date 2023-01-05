@@ -81,5 +81,38 @@ status:
    ###verify the isito injected has been added or not
    49  kubectl get deploy --namespace=app
    50  kubectl describe pod --namespace=app
-#####
+#####create the gateway service and virtual gw
+
+kubectl apply -f - <<EOF
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: hello-world-gateway
+spec:
+  selector:
+    istio: ingressgateway-private
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "hello-world.app.com"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: hello-world-vs
+spec:
+  hosts:
+  - "hello-world.app.com"
+  gateways:
+  - hello-world-gateway
+  http:
+  - route:
+    - destination:
+        host: hello-world
+        port:
+          number: 8080
+EOF
 
