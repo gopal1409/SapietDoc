@@ -116,3 +116,30 @@ spec:
           number: 8080
 EOF
 
+####create istio pvt
+vi istio-pvt.yml
+######add the following 
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-operator
+spec:
+  profile: default
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+      - namespace: istio-system
+        name: istio-ingressgateway-private
+        enabled: true
+        k8s:
+          serviceAnnotations:
+            service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: "private"
+  values:
+    gateways:
+      istio-ingressgateway:
+        sds:
+          enabled: true
+###apply it
+kubectl apply -f istio-pvt.yml
