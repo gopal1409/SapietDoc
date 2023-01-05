@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage('poll scm') {
+            steps {
+                echo 'hello from scm'
+            }
+        }
+        stage('mvn build') {
+            steps {
+                echo 'hello from maven build'
+            }
+        }
+        stage('mvn test') {
+            steps {
+                echo 'hello from maven test'
+            }
+        }
+    }
+}
