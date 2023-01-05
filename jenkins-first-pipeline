@@ -3,17 +3,17 @@ pipeline {
     stages {
         stage('poll scm') {
             steps {
-                echo 'hello from scm'
+                git credentialsId: 'git-key', url: 'git@github.com:gopal1409/chat-app-sapient.git'
             }
         }
         stage('mvn build') {
             steps {
-                echo 'hello from maven build'
+                sh 'mvn -B -DskipTest clean package'
             }
         }
         stage('mvn test') {
             steps {
-                echo 'hello from maven test'
+                sh 'mvn test'
             }
         }
     }
