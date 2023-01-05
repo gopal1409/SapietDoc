@@ -1,0 +1,10 @@
+13  kubectl config get-contexts
+   14  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+   15  chmod +x ./kind
+   16  sudo mv ./kind /usr/local/bin/kind
+   17  kind create cluster --name istio-testing
+   18  kubectl config get-contexts
+   19  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+   20  kubectl create serviceaccount -n kubernetes-dashboard admin-user
+   21  kubectl create clusterrolebinding -n kubernetes-dashboard admin-user --clusterrole cluster-admin --serviceaccount=kubernetes-dashboard:admin-user
+   22  token=$(kubectl -n kubernetes-dashboard create token admin-user)curl -L https://istio.io/downloadIstio | sh -
