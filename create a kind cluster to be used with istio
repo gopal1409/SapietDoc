@@ -13,3 +13,73 @@
     40  kubectl get ns
    41  kubectl create ns app
    42  kubectl label ns app istio-injection=enabled
+   ###create the deployment file
+    45  vi deploy.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-nginx
+  name: my-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-nginx
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: my-nginx
+    spec:
+      containers:
+      - image: dinup24/hello-world
+        name: nginx
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
+
+####to apply the deployment file
+
+ 48  kubectl apply -f deploy.yml --namespace=app
+###create the service file
+vi service.yml
+#####
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2023-01-05T05:23:06Z"
+  labels:
+    app: my-nginx
+  name: my-nginx
+  namespace: app
+  resourceVersion: "3418"
+  uid: 526077c2-97bf-4a8a-a36c-df561bd3e6c9
+spec:
+  clusterIP: 10.96.47.44
+  clusterIPs:
+  - 10.96.47.44
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: my-nginx
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+  ####to apply the service.yml
+   55  kubectl apply -f service.yml --namespace=app
+   ###verify the isito injected has been added or not
+   49  kubectl get deploy --namespace=app
+   50  kubectl describe pod --namespace=app
+#####
+
