@@ -17,7 +17,7 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
             }
         }
-        tage('checkstyle') {
+        stage('checkstyle') {
             steps {
                 sh 'mvn checkstyle:checkstyle'
                 
