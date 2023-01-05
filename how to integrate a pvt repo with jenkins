@@ -1,0 +1,10 @@
+513  git clone https://github.com/gopal1409/springboot-chat-app.git
+  514  cd springboot-chat-app/
+  515  ls
+  516  rm -rf .git
+  517  git config --global user.name "gopal"
+  518  git config --global user.email "gopal1409@gmail.com"
+  519  git add .
+  520  git init
+  521  git add .
+  522  git commit -m "intial commit"
