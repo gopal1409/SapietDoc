@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        app=''
+        dockerImage = ''
     }
     stages {
         stage('pull the code') {
@@ -12,7 +12,21 @@ pipeline {
         stage('docker build') {
             steps {
                 script {
-              app = sh 'mvn compile jib:dockerBuild'
+                   sh 'mvn compile jib:dockerBuild'
+                }
+            }
+        }
+        stage('docker push') {
+            steps {
+                script {
+                    // This step should not normally be used in your script. Consult the inline help for details.
+                       withDockerRegistry(credentialsId: 'nexus-cred', url: 'http://20.127.172.55:8085') {
+                         // some block
+                        sh 'mvn compile jib:build -Djib.allowInsecureRegistries=true -DsendCredentialsOverHttp'
+
+
+                       }
+                  
                 }
             }
         }
