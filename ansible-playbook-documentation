@@ -1,0 +1,25 @@
+###we will go back to our chat project
+ 516  cd /root
+  517  ls
+  518  cd springboot-chat-app/
+  519  ls
+  522  git pull origin master
+  523  git push origin master
+  ###create a directory ansible
+   525  mkdir ansible
+  526  cd ansible/
+  527  touch ansible.cfg
+  528  touch dev.inv
+  529  touch tomcat.yml
+  530  mkdir templates
+  531  vi dev.inv
+  532  vi ansible.cfg
+  533  vi tomcat.yml
+  534  cd templates/
+  535  vi tomcat.service.j2
+  536  cd ..
+  537  cd ..
+  538  git add .
+  539  git commit -m "ansible tomcat"
+  540  git push origin master
+
