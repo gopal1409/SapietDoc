@@ -30,5 +30,14 @@ pipeline {
                 
             }
         }
+         stage('sonar') {
+            steps {
+                sh 'mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=sapient-chatapp \
+  -Dsonar.host.url=http://20.63.78.251:9000 \
+  -Dsonar.login=sqp_70ab5e48b595089c1d1a59fd36e949e01d839eb6'
+                
+            }
+        }
     }
 }
