@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('pull the code') {
+            steps {
+               git credentialsId: 'git-key', url: 'git@github.com:gopal1409/chat-app-sapient.git'
+            }
+        }
+    }
+}
