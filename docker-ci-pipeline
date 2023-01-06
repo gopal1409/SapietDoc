@@ -1,9 +1,19 @@
 pipeline {
     agent any
+    environment {
+        app=''
+    }
     stages {
         stage('pull the code') {
             steps {
                git credentialsId: 'git-key', url: 'git@github.com:gopal1409/chat-app-sapient.git'
+            }
+        }
+        stage('docker build') {
+            steps {
+                script {
+              app = sh 'mvn compile jib:dockerBuild'
+                }
             }
         }
     }
