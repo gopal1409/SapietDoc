@@ -12,12 +12,20 @@ pipeline {
             }
         }
         stage('mvn test') {
+            when {
+               expression {stage == 'unittest'}
+             }
+
             steps {
                 sh 'mvn test'
                 junit 'target/surefire-reports/*.xml'
             }
         }
         stage('checkstyle') {
+            when {
+          expression {stage == 'checkstyle'}
+      }
+
             steps {
                 sh 'mvn checkstyle:checkstyle'
                 recordIssues(tools: [checkStyle(pattern: '**/checkstyle-result.xml')])
@@ -25,12 +33,19 @@ pipeline {
             }
         }
          stage('code coverage') {
+             when {
+          expression {stage == 'codecoverage'}
+      }
+
             steps {
                 jacoco()
                 
             }
         }
          stage('sonar') {
+              when {
+          expression {stage == 'sonar'}
+      }
             steps {
                 sh 'mvn clean verify sonar:sonar \
   -Dsonar.projectKey=sapient-chatapp \
