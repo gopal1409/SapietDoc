@@ -1,0 +1,39 @@
+##3install kind as kubernetes cluster
+524  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+  525  chmod +x ./kind
+  526  sudo mv ./kind /usr/local/bin/kind
+###install kubectl package
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo apt-get install -y apt-transport-https
+sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+######
+kubectl get nodes
+ 532  wget https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz
+  533  tar zxvf helm-v3.10.3-linux-amd64.tar.gz
+  534  cd linux-amd64/
+  535  mv helm /usr/bin
+  536  helm
+###now using helm chart we will deploy a metrics server. 
+539  helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+  540  helm upgrade --install metrics-server metrics-server/metrics-server
+  541  helm list
+  542  kubectl get pod --all-namespaces
+#####if you do metrics server pod it will show probe is failing
+546  kubectl describe pod 
+#####we need to disable the metrics server tls
+ 549  kubectl edit deploy metrics-server
+ ####it will give you the deploy configuration of metrics server   - --kubelet-insecure-tls
+ spec:
+      containers:
+      - args:
+        - --secure-port=4443
+        - --cert-dir=/tmp
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+        - --kubelet-insecure-tls
+
