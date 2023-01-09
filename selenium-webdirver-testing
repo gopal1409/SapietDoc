@@ -1,2 +1,42 @@
 install selenium then open port 44444
 524  docker run -d -p 4444:4444 -p 7900:7900 --shm-size 2g selenium/standalone-chrome:dev
+
+###we need to update the nodejs version
+501  sudo npm uninstall -g n
+  502  curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+  503  apt-get install -y nodejs
+  #####make a project folder go inside the directroy install jest as a java framework and install slenium web dirver
+   492  mkdir selenium-docker
+  493  cd selenium-docker/
+ 506  npm init -y
+  507  npm install selenium-webdriver jest
+###modify the package.json file to run test for jest framework
+vi package.json
+######modify the script test block
+{
+  "name": "selenium-docker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "jest": "^29.3.1",
+    "selenium-webdriver": "^4.7.1"
+  }
+}
+############
+then create a crome.test.js
+##########
+const webdriver = require('selenium-webdriver');
+const { Builder, Capabilities } = webdriver
+let capabilities = Capabilities.chrome();
+####finally run this command to test your code 
+ 513  npm run test
+
+
+
