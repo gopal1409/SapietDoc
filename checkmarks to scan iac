@@ -1,3 +1,12 @@
 terraform script scanning
 
 docker run -t -v /root/sapient-terrafrom-azure:/path checkmarx/kics:latest scan -p /path -o "/tmp/"
+
+scan your ansible playbook
+
+ 505   docker run -t -v /root/ansible-playbook-sapient-dec:/path checkmarx/kics:latest scan -p /path -o "/tmp/"
+
+
+scan your kubernetes manifest
+510  git clone https://github.com/gopal1409/dxckubemanifest.git
+  511   docker run -t -v /root/dxckubemanifest/:/path checkmarx/kics:latest scan -p /path -o "/tmp/"
