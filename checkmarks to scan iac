@@ -1,0 +1,3 @@
+terraform script scanning
+
+docker run -t -v /root/sapient-terrafrom-azure:/path checkmarx/kics:latest scan -p /path -o "/tmp/"
