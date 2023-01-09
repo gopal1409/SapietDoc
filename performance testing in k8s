@@ -37,3 +37,48 @@ kubectl get nodes
         - --metric-resolution=15s
         - --kubelet-insecure-tls
 
+####deploy our php app with service
+ 559  kubectl apply -f https://k8s.io/examples/application/php-apache.yaml
+  560  kubectl get pod
+563  kubectl get svc
+##add the autoscaling metrics for our php app
+  564  kubectl autoscale deploy php-apache --cpu-percent=80 --min=1 --max=4
+  ###check the hpa has been created or not
+   565  kubectl get hpa
+  566  kubectl describe hpa
+####create a template which will increase the load using infinite loop
+ 567  vi test.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infinite-calls
+  labels:
+    app: infinite-calls
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infinite-calls
+  template:
+    metadata:
+      name: infinite-calls
+      labels:
+        app: infinite-calls
+    spec:
+      containers:
+      - name: infinite-calls
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - "while true; do wget -q -O- http://php-apache; done"
+ ####then apply this
+ 574  kubectl apply -f test.yml
+  575  kubectl get pod
+  576  kubectl exec -it php-apache-5b56f9df94-sr26f sh
+  ##run this commadn inside the pod
+  ps
+  exit
+  ######then again run hpa see the load increase or not
+  577  kubectl get hpa -w
+
