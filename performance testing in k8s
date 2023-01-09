@@ -10,6 +10,8 @@ sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packag
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubectl
+###create the k8s cluster
+kind create cluster
 ######
 kubectl get nodes
  532  wget https://get.helm.sh/helm-v3.10.3-linux-amd64.tar.gz
