@@ -1,0 +1,12 @@
+---
+- name: install Docker
+  hosts: all
+  become: true
+  tasks:
+    - name: login to registry
+      docker_login:
+        registry: http://20.127.172.55:8085
+        username: admin
+        password: hetal123
+~
+~
