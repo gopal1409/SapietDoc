@@ -13,3 +13,15 @@
    ssh-keygen -t rsa
    ####reveal the ssh key
    cat /home/ec2-user/.ssh/id_rsa.pub
+   
+   ###3how to add code commit repo
+   17  nano /home/ec2-user/.ssh/config
+   ####inside this file 
+Host git-codecommit.*.amazonaws.com
+User APKAVFRJ3GX73K5KYOUD 
+IdentityFile ~/.ssh/id_rsa
+######
+   18  ls
+   19  cd code-nodejs/
+   20  git remote add origin ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/nodeapp
+   21  git push origin master
