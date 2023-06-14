@@ -1,0 +1,11 @@
+    2  sudo yum install git
+    3  git clone https://github.com/gopal1409/code-nodejs.git
+    4  cd code-nodejs/
+    6  rm -rf .git
+    7  git config --global user.name "gopal"
+    8  git config --global user.email "gopal@gmail.com"
+    9  git init
+   10  git add .
+   11  git commit -m "intial commit"
+   12  git status
+   13  git log
